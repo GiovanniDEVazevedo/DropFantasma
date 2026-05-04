@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drop de Fantasmas AR</title>
+    <link rel="stylesheet" href="./style/index.css">
+</head>
+<body>
+
+    <!-- Tela Principal do seu site -->
+    <div class="tela-principal">
+        <h1>Meu Fantasma</h1>
+        <!-- Botão que vai chamar a função JS passando a imagem do fantasma gerado -->
+        <button onclick="iniciarCaptura()">Tentar a Sorte!</button>
+    </div>
+
+    <!-- Container do Modo AR (Escondido por padrão) -->
+    <div id="ar-container" class="escondido">
+        
+        <!-- Cabeçalho do AR -->
+        <div class="ar-header">
+            <h3>Fantasma Capturado</h3>
+            <button onclick="fecharAR()" class="btn-fechar">X</button>
+            <button onclick="('')">Testar Fantasma Lendário!</button>
+        </div>
+
+        <!-- O Vídeo da Câmera -->
+        <video id="ar-video" autoplay playsinline muted></video>
+
+        <!-- O Personagem Flutuante -->
+        <div class="ar-overlay">
+            <img id="ar-ghost-img" src="./img/lendario.png" alt="Fantasma">
+            <div class="sombra-chao"></div>
+        </div>
+
+        <!-- Dicas no rodapé -->
+        <div class="ar-footer">
+            <p>📱 Mova o dispositivo para ver o fantasma</p>
+        </div>
+
+    </div>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
