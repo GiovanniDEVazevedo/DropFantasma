@@ -2,8 +2,8 @@
 
 - **Sistema de Drops Dinâmico**: Sorteio de personagens baseado em probabilidades de raridade.
 - **Visualização em AR**: Veja seu fantasma no mundo real através da câmera do celular (Fallback Web AR).
-- **Lógica de Cooldown**: Sistema de espera de 2 horas entre capturas para garantir o engajamento.
-- **Geração por IA**: Personagens e acessórios gerados via Nano Banana com camadas de personalização.
+- **Lógica de Cooldown**: Sistema de espera de 2 horas entre capturas para garantir o engajamento.(desenvolvimento)
+- **Geração por IA**: Personagens e acessórios gerados via Nano Banana com camadas de personalização.(desenvolvimento)
 
 ## 📊 Tabela de Raridades
 
@@ -18,18 +18,15 @@
 ## 🛠️ Tecnologias Utilizadas
 
 - **Frontend**: HTML5, CSS3 (Animações @keyframes) e Vanilla JavaScript.
-- **Backend**: Python com Flask (Controle de API e Cooldown).
+- **Backend**: Python com Flask (Controle de API e Cooldown).(desenvolvimento)
 - **Processamento de Imagem**: Pillow (PIL) para montagem dinâmica das camadas PNG.
 - **Câmera**: API `getUserMedia` para integração de Realidade Aumentada no navegador.
 
 ## 📂 Estrutura do Projeto
 
 ```text
-├── app.py              # Servidor Flask e Lógica de Cooldown
+
 ├── index.html          # Interface principal e container de vídeo
 ├── style.css           # Estilização e animações de flutuação
 ├── script.js           # Lógica de sorteio, probabilidade e acesso à câmera
-├── /assets
-│   ├── /base           # Corpos dos fantasmas
-│   └── /acessorios     # Camadas PNG (chapéus, auras, armas)
-└── /gerados            # Pasta de saída para os fantasmas montados
+
