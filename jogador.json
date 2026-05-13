@@ -1,0 +1,25 @@
+{
+    "colecao": [
+        {
+            "id": 3,
+            "nome": "Fantasma Épico (Ceifador)",
+            "raridade": "Épico",
+            "chance": 15,
+            "urlImagem": "/static/img/fantasma-epico.png"
+        },
+        {
+            "id": 2,
+            "nome": "Fantasma Incomum (Gravata)",
+            "raridade": "Incomum",
+            "chance": 25,
+            "urlImagem": "/static/img/fantasma-incomum.png"
+        },
+        {
+            "id": 1,
+            "nome": "Fantasma Comum",
+            "raridade": "Comum",
+            "chance": 50,
+            "urlImagem": "/static/img/fantasma-comum.png"
+        }
+    ]
+}
