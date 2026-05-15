@@ -1,9 +1,14 @@
 // =========================
+<<<<<<< HEAD
 // INICIAR CAPTURA
+=======
+// static/js/app.js
+>>>>>>> desenvolvimento
 // =========================
 
 async function iniciarCaptura() {
 
+<<<<<<< HEAD
     try {
 
         const resposta =
@@ -115,10 +120,15 @@ async function carregarColecao() {
 
     const resposta =
         await fetch("http://127.0.0.1:5000/colecao");
+=======
+    const resposta =
+        await fetch("/capturar");
+>>>>>>> desenvolvimento
 
     const dados =
         await resposta.json();
 
+<<<<<<< HEAD
     const divColecao =
         document.getElementById("colecao");
 
@@ -133,6 +143,55 @@ async function carregarColecao() {
             <img 
                 src="${fantasma.urlImagem}" 
                 width="150"
+=======
+    const fantasma =
+        dados.fantasma;
+
+    document
+        .getElementById("pontos")
+        .innerText =
+        dados.pontos;
+
+    if (dados.duplicado) {
+
+    
+
+    } else {
+
+        alert(
+            `${fantasma.nome} capturado!`
+        );
+    }
+
+    carregarColecao();
+}
+
+
+async function carregarColecao() {
+
+    const resposta =
+        await fetch("/colecao");
+
+    const dados =
+        await resposta.json();
+
+    const colecao =
+        document.getElementById(
+            "colecao"
+        );
+
+    colecao.innerHTML = "";
+
+    dados.colecao.forEach(fantasma => {
+
+        colecao.innerHTML += `
+
+        <div>
+
+            <img
+                src="${fantasma.urlImagem}"
+                width="120"
+>>>>>>> desenvolvimento
             >
 
             <h3>${fantasma.nome}</h3>
@@ -142,4 +201,11 @@ async function carregarColecao() {
         </div>
         `;
     });
+<<<<<<< HEAD
 }
+=======
+}
+
+
+carregarColecao();
+>>>>>>> desenvolvimento

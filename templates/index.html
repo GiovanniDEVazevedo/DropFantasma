@@ -1,20 +1,44 @@
+<!-- =========================
+templates/index.html
+========================= -->
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+
+<html lang="pt-br">
+
 <head>
+
     <meta charset="UTF-8">
+<<<<<<< Updated upstream:index.html
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drop de Fantasmas AR</title>
+<<<<<<< HEAD:templates/index.html
     <link rel="stylesheet" href="../static/style.css">
+=======
+    <link rel="stylesheet" href="./style/index.css">
+=======
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Soul Hunter</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+>>>>>>> Stashed changes:templates/index.html
+>>>>>>> desenvolvimento:index.html
 </head>
+
 <body>
 
-    <!-- Tela Principal do seu site -->
-    <div class="tela-principal">
-        <h1>Meu Fantasma</h1>
-        <!-- Botão que vai chamar a função JS passando a imagem do fantasma gerado -->
-        <button onclick="iniciarCaptura()">Tentar a Sorte!</button>
-    </div>
+    <h1>Soul Hunter</h1>
 
+<<<<<<< Updated upstream:index.html
     <!-- Container do Modo AR (Escondido por padrão) -->
     <div id="ar-container" class="escondido">
         
@@ -24,10 +48,18 @@
             <button onclick="fecharAR()" class="btn-fechar">X</button>
             
         </div>
+=======
+    <button onclick="iniciarCaptura()">
+        Capturar Fantasma
+    </button>
+>>>>>>> Stashed changes:templates/index.html
 
-        <!-- O Vídeo da Câmera -->
-        <video id="ar-video" autoplay playsinline muted></video>
+    <h2>
+        Pontos:
+        <span id="pontos">0</span>
+    </h2>
 
+<<<<<<< Updated upstream:index.html
         <!-- O Personagem Flutuante -->
         <div class="ar-overlay">
             <img id="ar-ghost-img" src="" alt="Fantasma">
@@ -41,6 +73,19 @@
 
     </div>
 
+<<<<<<< HEAD:templates/index.html
     <script src="../static/app.js"></script>
+=======
+    <script src="./js/script.js"></script>
+=======
+    <div id="colecao"></div>
+
+    <script
+        src="{{ url_for('static', filename='js/app.js') }}"
+    ></script>
+
+>>>>>>> Stashed changes:templates/index.html
+>>>>>>> desenvolvimento:index.html
 </body>
+
 </html>

@@ -20,6 +20,17 @@
             "raridade": "Comum",
             "chance": 50,
             "urlImagem": "/static/img/fantasma-comum.png"
+<<<<<<< HEAD
+=======
+        },
+        {
+            "id": 4,
+            "nome": "Lorde Fantasma",
+            "raridade": "Lendário",
+            "chance": 10,
+            "urlImagem": "/static/img/fantasma-lendario.png",
+            "quantidada": 1
+>>>>>>> desenvolvimento
         }
     ]
 }
