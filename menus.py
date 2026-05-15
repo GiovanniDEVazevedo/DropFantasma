@@ -9,7 +9,7 @@ import webbrowser
 
 ARQUIVO_JSON = "jogador.json"
 
-URL_MVP = "https://SEU-APP.onrender.com"
+URL_MVP = "https://dropfantasma.onrender.com"
 
 
 # =========================
