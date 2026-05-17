@@ -12,6 +12,7 @@ from flask import (
 import random
 import json
 import os
+import copy
 
 app = Flask(__name__)
 
@@ -30,7 +31,9 @@ banco_de_fantasmas = [
         "raridade": "Comum",
         "pontos": 20,
         "urlImagem":
-        "/static/img/fantasma-comum.png"
+        "/static/img/fantasma-comum.png",
+        "quantidade": 0
+
     },
 
     {
@@ -39,7 +42,8 @@ banco_de_fantasmas = [
         "raridade": "Incomum",
         "pontos": 40,
         "urlImagem":
-        "/static/img/fantasma-incomum.png"
+        "/static/img/fantasma-incomum.png",
+        "quantidade":0
     },
 
     {
@@ -48,7 +52,8 @@ banco_de_fantasmas = [
         "raridade": "Épico",
         "pontos": 80,
         "urlImagem":
-        "/static/img/fantasma-epico.png"
+        "/static/img/fantasma-epico.png",
+        "quantidade":0
     },
 
     {
@@ -57,7 +62,8 @@ banco_de_fantasmas = [
         "raridade": "Lendário",
         "pontos": 120,
         "urlImagem":
-        "/static/img/fantasma-lendario.png"
+        "/static/img/fantasma-lendario.png",
+        "quantidade":0
     }
 ]
 
@@ -142,34 +148,34 @@ def home():
 
 @app.route("/capturar")
 def capturar():
-
     dados = ler_save()
 
-    fantasma = random.choice(
-        banco_de_fantasmas
-    )
+    # 1. Definindo as chances (ex: 60% Comum, 25% Incomum, 10% Épico, 5% Lendário)
+    pesos = [60, 25, 10, 5]
+    
+    # random.choices retorna uma lista, pegamos o índice [0]
+    fantasma_sorteado = random.choices(banco_de_fantasmas, weights=pesos, k=1)[0]
+    
+    # 2. Verifica se já existe na coleção
+    fantasma_na_colecao = next((f for f in dados["colecao"] if f["id"] == fantasma_sorteado["id"]), None)
 
-    ja_existe = any(
+    if fantasma_na_colecao:
+        # Se já existe, apenas incrementamos a quantidade
+        fantasma_na_colecao["quantidade"] += 1
+        ja_existe = True
+    else:
+        # Se não existe, criamos uma cópia para não alterar o banco original
+        novo_fantasma = copy.deepcopy(fantasma_sorteado)
+        novo_fantasma["quantidade"] = 1
+        dados["colecao"].append(novo_fantasma)
+        dados["pontos"] += novo_fantasma["pontos"]
+        ja_existe = False
 
-        f["id"] == fantasma["id"]
-
-        for f in dados["colecao"]
-    )
-
-    if not ja_existe:
-
-        dados["colecao"].append(fantasma)
-
-        dados["pontos"] += fantasma["pontos"]
-
-        salvar_save(dados)
+    salvar_save(dados)
 
     return jsonify({
-
-        "fantasma": fantasma,
-
+        "fantasma": fantasma_sorteado,
         "duplicado": ja_existe,
-
         "pontos": dados["pontos"]
     })
 

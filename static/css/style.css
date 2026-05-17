@@ -1,105 +1,215 @@
-/* Reseta margens */
-body, html { margin: 0; padding: 0; font-family: sans-serif; }
+/* =========================================
+   IMPORTAÇÃO DE FONTE (Opcional, mas fica legal)
+   Usando uma fonte com toque "tech" do Google Fonts
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
 
-.tela-principal { text-align: center; padding: 50px; }
-
-/* --- ESTILOS DO MODO AR --- */
-
-.escondido { display: none !important; }
-
-#ar-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: black;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-}
-
-/* O vídeo ocupa todo o espaço ao fundo */
-#ar-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Garante que não fique esticado */
-    z-index: 1;
-}
-
-/* Interface por cima da câmera */
-.ar-header {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    padding: 15px;
+/* =========================================
+   REGRAS GERAIS E RESET
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    color: white;
-    z-index: 10;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
 }
 
-.btn-fechar {
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.ar-footer {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
+body {
+    background-color: #0d1117; /* Fundo quase preto, estilo VS Code/GitHub Dark */
+    background-image: 
+        radial-gradient(#1a202c 1px, transparent 1px),
+        radial-gradient(#1a202c 1px, #0d1117 1px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px; /* Leve padrão de grade no fundo */
+    
+    color: #e6edf3; /* Texto claro */
+    font-family: 'Roboto', sans-serif; /* Fonte padrão para textos */
     text-align: center;
-    color: white;
-    z-index: 10;
+    padding: 40px 20px;
+    min-height: 100vh;
 }
 
-.ar-footer p {
-    background: rgba(0, 0, 0, 0.5);
-    display: inline-block;
-    padding: 8px 15px;
-    border-radius: 20px;
+/* =========================================
+   TÍTULOS E PONTUAÇÃO
+   ========================================= */
+h1 {
+    font-family: 'Orbitron', sans-serif; /* Fonte futurista para o título */
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    color: #00ffff; /* Ciano Neon */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    /* Efeito de brilho neon */
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00cccc;
 }
 
-/* O container do personagem */
-.ar-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+    color: #8b949e;
+}
+
+#pontos {
+    color: #ffca28; /* Amarelo/Ouro para os pontos */
+    font-weight: bold;
+    font-size: 2rem;
+    text-shadow: 0 0 10px rgba(255, 202, 40, 0.7);
+}
+
+/* =========================================
+   BOTÕES
+   ========================================= */
+button {
+    font-family: 'Orbitron', sans-serif;
+    background-color: transparent;
+    color: #00ffff;
+    border: 2px solid #00ffff;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease; /* Transição suave para efeitos */
+    margin: 10px;
+    position: relative;
+    overflow: hidden;
+    /* Brilho no botão */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+}
+
+/* Efeito de Hover (passar o mouse) */
+button:hover {
+    background-color: #00ffff;
+    color: #0d1117;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+    transform: translateY(-3px); /* Levanta levemente */
+}
+
+/* Efeito de clique */
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+}
+
+/* O botão de capturar pode ser maior e centralizado */
+body > button:first-of-type {
+    font-size: 1.5rem;
+    padding: 20px 40px;
+    display: block;
+    margin: 0 auto 40px auto;
+}
+
+/* =========================================
+   SEÇÃO DA COLEÇÃO (CONTAINER DYNÂMICO)
+   ========================================= */
+#colecao {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid #30363d;
+}
+
+/* Grid para organizar os fantasmas (usado pelo JS no futuro) */
+.grid-fantasmas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    justify-items: center;
+}
+
+/* =========================================
+   ESTILO DO CARD DO FANTASMA
+   (Para quando você implementar o JS que cria os cards)
+   ========================================= */
+.card-fantasma {
+    background-color: #161b22;
+    border-radius: 12px;
+    padding: 20px;
+    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    border: 2px solid #30363d; /* Borda padrão escura */
 }
 
-/* A animação de flutuar que estava no Tailwind, agora em CSS puro */
-#ar-ghost-img {
-    width: 250px;
-    height: auto;
-    filter: drop-shadow(0px 0px 15px rgba(99, 102, 241, 0.8));
-    animation: flutuar 4s ease-in-out infinite;
+.card-fantasma:hover {
+    transform: translateY(-10px) scale(1.05);
 }
 
-.sombra-chao {
+.card-fantasma img {
     width: 120px;
-    height: 20px;
-    background: rgba(99, 102, 241, 0.4);
-    border-radius: 50%;
-    filter: blur(10px);
-    margin-top: -10px;
+    height: 120px;
+    object-fit: contain; /* Não distorce a imagem */
+    margin-bottom: 15px;
+    /* Brilho suave atrás da imagem do fantasma */
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
 }
 
-@keyframes flutuar {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-20px) scale(1.02); }
+.card-fantasma h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #f0f6fc;
 }
+
+.card-fantasma p.raridade {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: rgba(255,255,255,0.1);
+}
+
+.card-fantasma p.pontos-card {
+    font-size: 0.9rem;
+    color: #8b949e;
+}
+
+/* =========================================
+   CORES POR RARIDADE (Bordas e Brilhos)
+   Use essas classes no seu JS ao criar o card
+   ========================================= */
+
+/* Comum (Cinza/Branco) */
+.card-fantasma.comum {
+    border-color: #d1d5db;
+}
+.card-fantasma.comum:hover {
+    box-shadow: 0 0 20px rgba(209, 213, 219, 0.5);
+}
+.card-fantasma.comum p.raridade { color: #d1d5db; }
+
+/* Incomum (Verde) */
+.card-fantasma.incomum {
+    border-color: #4caf50;
+}
+.card-fantasma.incomum:hover {
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.6);
+}
+.card-fantasma.incomum p.raridade { color: #4caf50; }
+
+/* Épico (Roxo) */
+.card-fantasma.épico {
+    border-color: #9c27b0;
+}
+.card-fantasma.épico:hover {
+    box-shadow: 0 0 25px rgba(156, 39, 176, 0.7);
+}
+.card-fantasma.épico p.raridade { color: #9c27b0; text-shadow: 0 0 5px #9c27b0; }
+
+/* Lendário (Laranja/Ouro com brilho extra) */
+.card-fantasma.lendário {
+    border-color: #ff9800;
+    background: linear-gradient(145deg, #161b22, #2c1a01); /* Leve gradiente de fundo */
+}
+.card-fantasma.lendário:hover {
+    box-shadow: 0 0 35px rgba(255, 152, 0, 0.9);
+}
+.card-fantasma.lendário p.raridade { color: #ff9800; text-shadow: 0 0 8px #ff9800; }
+.card-fantasma.lendário h3 { color: #ff9800; } /* Título dourado para lendários */

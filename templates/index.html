@@ -8,40 +8,43 @@ templates/index.html
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+        <meta
+    name="viewport"
+            content="width=device-width, initial-scale=1.0"
+>
 
-    <title>Soul Hunter</title>
+ <title>Soul Hunter</title>
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/style.css') }}"
-    >
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+    <script
+        src="{{ url_for('static', filename='js/app.js') }}"
+    ></script>
 
 </head>
 
 <body>
 
-    <h1>Soul Hunter</h1>
+    <h1>Soul Hunter</h1>
 
-    <button onclick="iniciarCaptura()">
-        Capturar Fantasma
-    </button>
+    <button onclick="iniciarCaptura()">
+        Capturar Fantasma
+    </button>
 
-    <h2>
-        Pontos:
-        <span id="pontos">0</span>
-    </h2>
+    <h2>
+        Pontos:
+        <span id="pontos">0</span>
+    </h2>
 
-    <div id="colecao"></div>
+    <div id="colecao">
+        <button>Ver coleção</button>
+    </div>
 
-    <script
-        src="{{ url_for('static', filename='js/app.js') }}"
-    ></script>
+    
 
 </body>
 
