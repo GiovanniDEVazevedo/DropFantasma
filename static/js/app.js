@@ -31,6 +31,15 @@ async function atualizarPontos() {
     }
 }
 
+function mostrarModalFalha(fantasma) {
+    document.getElementById("modal-imagem").style.display = "block";
+    document.getElementById("modal-imagem").src = fantasma.urlImagem;
+    document.getElementById("modal-imagem").alt = fantasma.nome;
+    document.getElementById("modal-mensagem").innerText =
+        `O fantasma escapou!\nRaridade: ${fantasma.raridade}\nTente novamente...`;
+    document.getElementById("modal-captura").classList.add("ativo");
+}
+
 function mostrarModal(fantasma, duplicado) {
     document.getElementById("modal-imagem").style.display = "block";
     document.getElementById("modal-imagem").src = fantasma.urlImagem;
@@ -69,7 +78,11 @@ async function iniciarCaptura() {
 
         document.getElementById("pontos").innerText = dados.pontos;
 
-        mostrarModal(dados.fantasma, dados.duplicado);
+        if (dados.capturado) {
+            mostrarModal(dados.fantasma, dados.duplicado);
+        } else {
+            mostrarModalFalha(dados.fantasma);
+        }
 
         const divColecao = document.getElementById("colecao");
         if (divColecao.querySelector(".grid-fantasmas")) {
@@ -77,6 +90,91 @@ async function iniciarCaptura() {
         }
     } catch (erro) {
         console.error("Erro ao capturar fantasma:", erro);
+        alert("Erro na conexao. Tente novamente.");
+    }
+}
+
+async function abrirMercado() {
+    try {
+        const resposta = await fetch("/mercado");
+        const dados = await resposta.json();
+
+        document.getElementById("mercado-pontos").innerText =
+            `Saldo: ${dados.pontos} pontos`;
+
+        const lista = document.getElementById("mercado-lista");
+        lista.innerHTML = "";
+
+        dados.itens.forEach(item => {
+            const card = document.createElement("div");
+            card.className = "mercado-item";
+
+            const info = document.createElement("div");
+            info.className = "mercado-info";
+
+            const nome = document.createElement("p");
+            nome.className = "mercado-nome";
+            nome.textContent = `${item.nome} - ${item.preco} pts`;
+
+            const descricao = document.createElement("p");
+            descricao.className = "mercado-descricao";
+            descricao.textContent = item.descricao;
+
+            const estoque = document.createElement("p");
+            estoque.className = "mercado-estoque";
+            estoque.textContent = `Voce tem: ${dados.inventario[item.id] || 0}`;
+
+            info.appendChild(nome);
+            info.appendChild(descricao);
+            info.appendChild(estoque);
+
+            const btn = document.createElement("button");
+            btn.textContent = "Comprar";
+            btn.onclick = () => comprarItem(item.id);
+
+            card.appendChild(info);
+            card.appendChild(btn);
+            lista.appendChild(card);
+        });
+
+        document.getElementById("modal-mercado").classList.add("ativo");
+    } catch (erro) {
+        console.error("Erro ao abrir mercado:", erro);
+        alert("Erro ao acessar o mercado.");
+    }
+}
+
+function fecharMercado() {
+    document.getElementById("modal-mercado").classList.remove("ativo");
+}
+
+const overlayMercado = document.getElementById("modal-mercado");
+if (overlayMercado) {
+    overlayMercado.addEventListener("click", function(evento) {
+        if (evento.target === overlayMercado) {
+            fecharMercado();
+        }
+    });
+}
+
+async function comprarItem(itemId) {
+    try {
+        const resposta = await fetch("/comprar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ item: itemId })
+        });
+        const dados = await resposta.json();
+
+        if (resposta.status === 400) {
+            alert(dados.erro);
+            return;
+        }
+
+        document.getElementById("pontos").innerText = dados.pontos;
+        abrirMercado();
+    } catch (erro) {
+        console.error("Erro ao comprar item:", erro);
         alert("Erro na conexao. Tente novamente.");
     }
 }

@@ -26,6 +26,10 @@
         Trocar Repetidos por Pontos
     </button>
 
+    <button onclick="abrirMercado()">
+        Mercado
+    </button>
+
     <div id="colecao">
         <button>Ver colecao</button>
     </div>
@@ -37,6 +41,16 @@
             <img id="modal-imagem" src="" alt="">
             <p id="modal-mensagem"></p>
             <button class="modal-ok" onclick="fecharModal()">Fechar</button>
+        </div>
+    </div>
+
+    <div id="modal-mercado" class="modal-overlay">
+        <div class="modal-caixa">
+            <button class="modal-fechar" onclick="fecharMercado()">&times;</button>
+            <h3>Mercado de Itens</h3>
+            <p id="mercado-pontos"></p>
+            <div id="mercado-lista"></div>
+            <button class="modal-ok" onclick="fecharMercado()">Fechar</button>
         </div>
     </div>
 

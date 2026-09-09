@@ -320,3 +320,52 @@ body > button:first-of-type {
     padding: 10px 30px;
     font-size: 1rem;
 }
+
+/* =========================================
+   MERCADO
+   ========================================= */
+#mercado-pontos {
+    color: #ffca28;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+#mercado-lista {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.mercado-item {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.mercado-info p {
+    margin-bottom: 4px;
+}
+
+.mercado-nome {
+    color: #00ffff;
+    font-weight: bold;
+}
+
+.mercado-descricao {
+    color: #8b949e;
+    font-size: 0.85rem;
+}
+
+.mercado-estoque {
+    color: #ffca28;
+    font-size: 0.9rem;
+}
+
+.mercado-item button {
+    margin: 10px 0 0 0;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
