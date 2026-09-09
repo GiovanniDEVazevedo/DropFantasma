@@ -194,6 +194,15 @@ body > button:first-of-type {
 }
 .card-fantasma.incomum p.raridade { color: #4caf50; }
 
+/* Raro (Azul) */
+.card-fantasma.raro {
+    border-color: #2196f3;
+}
+.card-fantasma.raro:hover {
+    box-shadow: 0 0 25px rgba(33, 150, 243, 0.7);
+}
+.card-fantasma.raro p.raridade { color: #2196f3; text-shadow: 0 0 5px #2196f3; }
+
 /* Épico (Roxo) */
 .card-fantasma.épico {
     border-color: #9c27b0;
