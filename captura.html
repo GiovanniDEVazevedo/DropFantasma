@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captura de Foto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a2e;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 20px 0;
+            font-size: 1.5rem;
+        }
+
+        #video-container {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+            display: block;
+            border-radius: 10px;
+        }
+
+        #tela-preta {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            background: #000;
+            border-radius: 10px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #tela-preta p {
+            color: #aaa;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        canvas {
+            display: none;
+        }
+
+        #foto-capturada {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .botoes {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #btn-capturar {
+            background: #e94560;
+            color: #fff;
+        }
+
+        #btn-capturar:hover {
+            background: #c73650;
+        }
+
+        #btn-novamente {
+            background: #0f3460;
+            color: #fff;
+            display: none;
+        }
+
+        #btn-novamente:hover {
+            background: #1a4a7a;
+        }
+
+        #btn-download {
+            background: #16c784;
+            color: #fff;
+            display: none;
+        }
+
+        #btn-download:hover {
+            background: #12a56b;
+        }
+
+        #btn-voltar {
+            background: #533483;
+            color: #fff;
+            display: none;
+        }
+
+        #btn-voltar:hover {
+            background: #6b45a0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sistema de Captura</h1>
+
+    <div id="video-container">
+        <video id="video" autoplay playsinline></video>
+    </div>
+
+    <div id="tela-preta">
+        <p>Acesso a câmera não autorizado.</p>
+        <p>Ative a permissão nas configurações do navegador e recarregue a página.</p>
+    </div>
+
+    <canvas id="canvas"></canvas>
+    <img id="foto-capturada" alt="Foto capturada">
+
+    <div class="botoes">
+        <button id="btn-capturar" onclick="capturarFoto()">Capturar</button>
+        <button id="btn-novamente" onclick="tirarNovamente()">Tirar Novamente</button>
+        <button id="btn-download" onclick="baixarFoto()">Baixar</button>
+        <button id="btn-voltar" onclick="voltarCamera()">Voltar</button>
+    </div>
+
+    <script>
+        var video = document.getElementById("video");
+        var canvas = document.getElementById("canvas");
+        var fotoCapturada = document.getElementById("foto-capturada");
+        var telaPreta = document.getElementById("tela-preta");
+        var videoContainer = document.getElementById("video-container");
+        var btnCapturar = document.getElementById("btn-capturar");
+        var btnNovamente = document.getElementById("btn-novamente");
+        var btnDownload = document.getElementById("btn-download");
+        var btnVoltar = document.getElementById("btn-voltar");
+        var stream = null;
+
+        function iniciarCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false })
+                    .then(function(mediaStream) {
+                        stream = mediaStream;
+                        video.srcObject = mediaStream;
+                        videoContainer.style.display = "block";
+                        telaPreta.style.display = "none";
+                    })
+                    .catch(function(erro) {
+                        mostrarTelaPreta();
+                    });
+            } else {
+                mostrarTelaPreta();
+            }
+        }
+
+        function mostrarTelaPreta() {
+            videoContainer.style.display = "none";
+            telaPreta.style.display = "flex";
+            btnCapturar.style.display = "none";
+        }
+
+        function capturarFoto() {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            var dadosFoto = canvas.toDataURL("image/png");
+            fotoCapturada.src = dadosFoto;
+            fotoCapturada.style.display = "block";
+
+            video.style.display = "none";
+            btnCapturar.style.display = "none";
+            btnNovamente.style.display = "inline-block";
+            btnDownload.style.display = "inline-block";
+            btnVoltar.style.display = "inline-block";
+
+            pararCamera();
+        }
+
+        function pararCamera() {
+            if (stream) {
+                var tracks = stream.getTracks();
+                for (var i = 0; i < tracks.length; i++) {
+                    tracks[i].stop();
+                }
+            }
+        }
+
+        function tirarNovamente() {
+            fotoCapturada.style.display = "none";
+            video.style.display = "block";
+            btnNovamente.style.display = "none";
+            btnDownload.style.display = "none";
+            btnVoltar.style.display = "none";
+            btnCapturar.style.display = "inline-block";
+            iniciarCamera();
+        }
+
+        function voltarCamera() {
+            tirarNovamente();
+        }
+
+        function baixarFoto() {
+            var link = document.createElement("a");
+            link.download = "foto_" + Date.now() + ".png";
+            link.href = fotoCapturada.src;
+            link.click();
+        }
+
+        iniciarCamera();
+    </script>
+
+</body>
+</html>
