@@ -26,6 +26,16 @@
         <button>Ver colecao</button>
     </div>
 
+    <div id="modal-captura" class="modal-overlay">
+        <div class="modal-caixa">
+            <button class="modal-fechar" onclick="fecharModal()">&times;</button>
+            <h3 id="modal-titulo">Fantasma Capturado</h3>
+            <img id="modal-imagem" src="" alt="">
+            <p id="modal-mensagem"></p>
+            <button class="modal-ok" onclick="fecharModal()">Fechar</button>
+        </div>
+    </div>
+
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 
 </body>

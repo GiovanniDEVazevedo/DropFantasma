@@ -31,6 +31,28 @@ async function atualizarPontos() {
     }
 }
 
+function mostrarModal(fantasma, duplicado) {
+    document.getElementById("modal-imagem").src = fantasma.urlImagem;
+    document.getElementById("modal-imagem").alt = fantasma.nome;
+    document.getElementById("modal-mensagem").innerText = duplicado
+        ? `Voce ja tinha essa alma!\nRaridade: ${fantasma.raridade}\nEla foi somada a sua colecao.`
+        : `Novo fantasma capturado!\nRaridade: ${fantasma.raridade}\nEla foi adicionada a sua colecao.`;
+    document.getElementById("modal-captura").classList.add("ativo");
+}
+
+function fecharModal() {
+    document.getElementById("modal-captura").classList.remove("ativo");
+}
+
+const overlayModal = document.getElementById("modal-captura");
+if (overlayModal) {
+    overlayModal.addEventListener("click", function(evento) {
+        if (evento.target === overlayModal) {
+            fecharModal();
+        }
+    });
+}
+
 async function iniciarCaptura() {
     try {
         const resposta = await fetch("/capturar", { method: "POST" });
@@ -38,18 +60,7 @@ async function iniciarCaptura() {
 
         document.getElementById("pontos").innerText = dados.pontos;
 
-        let nome = escapeHtml(dados.fantasma.nome);
-        let raridade = escapeHtml(dados.fantasma.raridade);
-
-        let mensagem = `Voce capturou: ${nome}!\nRaridade: ${raridade}`;
-
-        if (dados.duplicado) {
-            mensagem += "\n\nVoce ja tinha essa alma! Ela foi somada a sua colecao.";
-        } else {
-            mensagem += "\n\nNovo fantasma adicionado a sua colecao!";
-        }
-
-        alert(mensagem);
+        mostrarModal(dados.fantasma, dados.duplicado);
 
         const divColecao = document.getElementById("colecao");
         if (divColecao.querySelector(".grid-fantasmas")) {

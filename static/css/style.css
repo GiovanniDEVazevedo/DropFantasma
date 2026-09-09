@@ -222,3 +222,101 @@ body > button:first-of-type {
 }
 .card-fantasma.lendário p.raridade { color: #ff9800; text-shadow: 0 0 8px #ff9800; }
 .card-fantasma.lendário h3 { color: #ff9800; } /* Título dourado para lendários */
+
+/* =========================================
+   MODAL DE CAPTURA
+   ========================================= */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay.ativo {
+    display: flex;
+}
+
+.modal-caixa {
+    background: #161b22;
+    border: 2px solid #00ffff;
+    border-radius: 15px;
+    padding: 30px;
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+    animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-fechar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: #8b949e;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.modal-fechar:hover {
+    background: transparent;
+    color: #ff4444;
+    box-shadow: none;
+    transform: none;
+}
+
+.modal-fechar:active {
+    transform: none;
+    box-shadow: none;
+}
+
+.modal-caixa h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+    margin-bottom: 15px;
+}
+
+#modal-imagem {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    margin: 10px auto;
+    display: block;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
+}
+
+#modal-mensagem {
+    color: #e6edf3;
+    margin: 15px 0;
+    line-height: 1.6;
+}
+
+.modal-ok {
+    margin-top: 10px;
+    padding: 10px 30px;
+    font-size: 1rem;
+}
