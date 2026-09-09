@@ -32,11 +32,20 @@ async function atualizarPontos() {
 }
 
 function mostrarModal(fantasma, duplicado) {
+    document.getElementById("modal-imagem").style.display = "block";
     document.getElementById("modal-imagem").src = fantasma.urlImagem;
     document.getElementById("modal-imagem").alt = fantasma.nome;
     document.getElementById("modal-mensagem").innerText = duplicado
         ? `Voce ja tinha essa alma!\nRaridade: ${fantasma.raridade}\nEla foi somada a sua colecao.`
         : `Novo fantasma capturado!\nRaridade: ${fantasma.raridade}\nEla foi adicionada a sua colecao.`;
+    document.getElementById("modal-captura").classList.add("ativo");
+}
+
+function mostrarModalTroca(trocados, pontosGanhos, pontosTotais) {
+    document.getElementById("modal-imagem").style.display = "none";
+    document.getElementById("modal-mensagem").innerText = trocados > 0
+        ? `Voce trocou ${trocados} fantasma(s) repetido(s)!\nGanhou ${pontosGanhos} pontos.\nSaldo atual: ${pontosTotais} pontos.`
+        : `Nenhum fantasma repetido para trocar.\nSaldo atual: ${pontosTotais} pontos.`;
     document.getElementById("modal-captura").classList.add("ativo");
 }
 
@@ -68,6 +77,24 @@ async function iniciarCaptura() {
         }
     } catch (erro) {
         console.error("Erro ao capturar fantasma:", erro);
+        alert("Erro na conexao. Tente novamente.");
+    }
+}
+
+async function trocarRepetidos() {
+    try {
+        const resposta = await fetch("/trocar", { method: "POST" });
+        const dados = await resposta.json();
+
+        document.getElementById("pontos").innerText = dados.pontos;
+        mostrarModalTroca(dados.trocados, dados.pontos_ganhos, dados.pontos);
+
+        const divColecao = document.getElementById("colecao");
+        if (divColecao.querySelector(".grid-fantasmas")) {
+            verColecao();
+        }
+    } catch (erro) {
+        console.error("Erro ao trocar repetidos:", erro);
         alert("Erro na conexao. Tente novamente.");
     }
 }

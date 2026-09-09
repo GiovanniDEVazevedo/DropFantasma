@@ -93,6 +93,29 @@ def colecao():
     return jsonify(dados)
 
 
+@app.route("/trocar", methods=["POST"])
+def trocar_repetidos():
+    dados = ler_save()
+    trocados = 0
+    pontos_ganhos = 0
+
+    for fantasma in dados["colecao"]:
+        extras = fantasma.get("quantidade", 1) - 1
+        if extras > 0:
+            pontos_ganhos += extras * fantasma["pontos"]
+            trocados += extras
+            fantasma["quantidade"] = 1
+
+    dados["pontos"] += pontos_ganhos
+    salvar_save(dados)
+
+    return jsonify({
+        "trocados": trocados,
+        "pontos_ganhos": pontos_ganhos,
+        "pontos": dados["pontos"]
+    })
+
+
 if __name__ == "__main__":
     criar_save()
     debug = True
